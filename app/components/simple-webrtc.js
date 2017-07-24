@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-simplewebrtc/components/simple-webrtc';

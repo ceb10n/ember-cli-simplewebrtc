@@ -1,5 +1,7 @@
 {
   "name": "ember-cli-simplewebrtc",
   "dependencies": {
+    "ember-cli-shims": "0.1.3",
+    "SimpleWebRTC": "^3.0.1"
   }
 }
