@@ -25,6 +25,12 @@ export default Ember.Component.extend({
 
     chatRoom: 'defaultChatRoom',
 
+    isFullScreen: false,
+
+    isVideoMuted: false,
+
+    isAudioMuted: false,
+
     didInsertElement() {
         const options = {
             localVideoEl: this.get('localId'),
@@ -93,4 +99,59 @@ export default Ember.Component.extend({
 
     // emitted when a peer stream is removed
     videoRemoved: function(videoEl, peer) { },
+
+    actions: {
+        muteAudio: function() {
+            console.log(this.get('isAudioMuted'));
+            this.set('isAudioMuted', !this.get('isAudioMuted'));
+            console.log(this.get('isAudioMuted'));
+        },
+
+        muteVideo: function() {
+            console.log(this.get('isVideoMuted'));
+            this.set('isVideoMuted', !this.get('isVideoMuted'));
+            console.log(this.get('isVideoMuted'));
+        },
+
+        setFullscreen: function() {
+            const isFullScreen = this.get('isFullScreen');
+            const docElement = document.documentElement;
+
+            if (isFullScreen) {
+                this.$("#fullscreen").attr('title', 'Enter fullscreen');
+
+                if (document.cancelFullscreen) {
+                    document.cancelFullscreen();
+                }
+                else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                }
+                else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                }
+                else if (document.msCancelFullscreen) {
+                    document.msCancelFullscreen();
+                } else {
+                    console.log('shit');
+                }
+            } else {
+                this.$("#fullscreen").attr('title', 'Exit fullscreen');
+
+                if (docElement.requestFullscreen) {
+                    docElement.requestFullscreen();
+                }
+                else if (docElement.mozRequestFullScreen) {
+                    docElement.mozRequestFullScreen();
+                }
+                else if (docElement.webkitRequestFullscreen) {
+                    docElement.webkitRequestFullscreen();
+                }
+                else if (docElement.msRequestFullscreen) {
+                    docElement.msRequestFullscreen();
+                }
+            }
+
+            this.set('isFullScreen', !isFullScreen);
+        }
+    }
 });

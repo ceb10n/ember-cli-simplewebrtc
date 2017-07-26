@@ -1,12 +1,11 @@
 <div id="videos">
     <video id="localVideo"></video>
     <video id="remoteVideo"></video>
-    <video id="mini-video" class="active"></video>
 </div>
 
 <div id="icons" class="active">
 
-  <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68" class="on">
+  <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68" class="{{if isAudioMuted 'on' ''}}" {{action "muteAudio"}}>
     <title>title</title>
     <circle cx="24" cy="24" r="34">
       <title>Mute audio</title>
@@ -15,7 +14,7 @@
     <path class="off" transform="scale(0.6), translate(17,18)"  d="M24 28c3.31 0 5.98-2.69 5.98-6L30 10c0-3.32-2.68-6-6-6-3.31 0-6 2.68-6 6v12c0 3.31 2.69 6 6 6zm10.6-6c0 6-5.07 10.2-10.6 10.2-5.52 0-10.6-4.2-10.6-10.2H10c0 6.83 5.44 12.47 12 13.44V42h4v-6.56c6.56-.97 12-6.61 12-13.44h-3.4z"  fill="white"/>
   </svg>
 
-  <svg id="mute-video" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+  <svg id="mute-video" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68" class="{{if isVideoMuted 'on' ''}}" {{action "muteVideo"}}>
     <circle cx="24" cy="24" r="34">
       <title>Mute video</title>
     </circle>
@@ -23,7 +22,7 @@
     <path class="off" transform="scale(0.6), translate(17,16)" d="M40 8H8c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h32c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zm-4 24l-8-6.4V32H12V16h16v6.4l8-6.4v16z" fill="white"/>
   </svg>
 
-  <svg id="fullscreen" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+  <svg id="fullscreen" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68" class="{{if isFullScreen 'on' ''}}" {{action "setFullscreen"}}>
     <circle cx="24" cy="24" r="34">
       <title>Enter fullscreen</title>
     </circle>
