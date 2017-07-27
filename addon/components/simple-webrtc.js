@@ -34,7 +34,7 @@ export default Ember.Component.extend({
     didInsertElement() {
         const options = {
             localVideoEl: this.get('localId'),
-            remoteVideoEl: this.get('remoteId'),
+            // remoteVideoEl: this.get('remoteId'),
             autoRequestMedia: this.get('autoRequestMedia'),
             media: {
                 video: true,
@@ -46,7 +46,7 @@ export default Ember.Component.extend({
             },
             localVideo: {
                 autoplay: true,
-                mirror: true,
+                mirror: false,
                 muted: true
             }
         };
@@ -66,6 +66,26 @@ export default Ember.Component.extend({
 
         webrtc.on('readyToCall', function() {
             webrtc.joinRoom(that.get('chatRoom'));
+        });
+
+        webrtc.on('videoAdded', function (video, peer) {
+            console.log('video added', video);
+            var remotes = document.getElementById('videos');
+
+            if (remotes) {
+                that.$("#localVideo").attr('class', 'mini-video');
+                var container = document.createElement('div');
+                that.$(video).attr('class', 'fullscreen-video inverted');
+                // container.className = 'fullscreen-video';
+                // container.id = 'container_' + webrtc.getDomId(peer);
+                container.appendChild(video);
+
+                video.oncontextmenu = function () { return false; };
+
+                remotes.appendChild(container);
+
+
+            }
         });
 
         this.set('webrtc', webrtc);
@@ -102,15 +122,27 @@ export default Ember.Component.extend({
 
     actions: {
         muteAudio: function() {
-            console.log(this.get('isAudioMuted'));
-            this.set('isAudioMuted', !this.get('isAudioMuted'));
-            console.log(this.get('isAudioMuted'));
+            const isAudioMuted = this.get('isAudioMuted');
+
+            if (isAudioMuted) {
+                this.get('webrtc').unmute();
+            } else {
+                this.get('webrtc').mute();
+            }
+
+            this.set('isAudioMuted', !isAudioMuted);
         },
 
         muteVideo: function() {
-            console.log(this.get('isVideoMuted'));
-            this.set('isVideoMuted', !this.get('isVideoMuted'));
-            console.log(this.get('isVideoMuted'));
+            const isVideoMuted = this.get('isVideoMuted');
+
+            if (isVideoMuted) {
+                this.get('webrtc').resumeVideo();
+            } else {
+                this.get('webrtc').pauseVideo();
+            }
+
+            this.set('isVideoMuted', !isVideoMuted);
         },
 
         setFullscreen: function() {
