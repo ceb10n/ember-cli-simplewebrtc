@@ -6,6 +6,8 @@ module.exports = {
     },
 
     afterInstall: function(options) {
-        return this.addBowerPackageToProject('SimpleWebRTC');
+        return this.addBowerPackagesToProject([
+            { name: 'SimpleWebRTC' }
+        ]);
     }
 };
